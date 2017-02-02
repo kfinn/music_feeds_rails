@@ -1,5 +1,42 @@
 <p id="notice"><%= notice %></p>
 
-<%= react_component 'Playlist', songs: @songs.as_json %>
+<div class="Playlist">
+  <h1 class="Playlist-title">Songs</h1>
+  <div class="Playlist-player">
+    <div class="SpotifyPlaylistPlayer">
+      <iframe class="SpotifyPlaylistPlayer-iframe" src="<%= spotify_playlist_src_for @songs %>" width="300" height="80" frameBorder="0" allowTransparency="true"></iframe>
+    </div>
+  </div>
+  <ul class="Playlist-songList">
+   <% @songs.each do |song| %>
+     <li class="Playlist-songListItem">
+       <div class="Song">
+         <div class="Song-playButton">
+           <% if song.spotify_id %>
+             <div class="SpotifySongPlayer">
+               <iframe class="SpotifySongPlayer-iframe" src="<%= spotify_song_src_for song %>" width="80" height="80" frameBorder="0" allowTransparency="true"></iframe>
+             </div>
+           <% end %>
+         </div>
+         <div class="Song-details">
+           <span class="Song-artist"><%= song.artist %></span> &mdash; <span class="Song-title"><%= song.title %></span>
+           <ul class="RecommendationList">
+             <% song.recommendations.each do |recommendation| %>
+              <li>
+                <div class="Recommendation">
+                  <%= link_to recommendation.creator, recommendation.url %>
+                  <span class="Recommendation-recommendedAt">
+                    <%= time_ago_in_words recommendation.recommended_at %>
+                  </span>
+                </div>
+              </li>
+              <% end %>
+           </ul>
+         </div>
+       </div>
+     </li>
+   <% end %>
+  </ul>
+</div>
 
 <div><%= link_to 'update', feed_updates_path, method: :post %></div>
