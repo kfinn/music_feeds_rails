@@ -3,17 +3,35 @@ class FeedItem
     @xml = xml
   end
 
-  def artist
-    categories.select do |category|
-      raw_title.start_with? category
-    end.first
+  def guid
+    xml.css('guid').text
+  end
+
+  def url
+    xml.css('link').text
+  end
+
+  def creator
+    xml.xpath('dc:creator').text
+  end
+
+  def description
+    xml.css('description').text
+  end
+
+  def recommended_at
+    xml.css('pubDate').text
+  end
+
+  def song_artist
+    raw_title.split(TITLE_SEPARATOR).first.strip
   end
 
   def categories
     xml.css('category').map &:text
   end
 
-  def title
+  def song_title
     raw_title.sub(/^[^#{TITLE_SEPARATOR}]*#{TITLE_SEPARATOR}/, '').sub(/ Video$/, '').strip
   end
 
@@ -27,10 +45,6 @@ class FeedItem
 
   def song?
     raw_title.include? TITLE_SEPARATOR
-  end
-
-  def guid
-    xml.css('guid').text
   end
 
   attr_reader :xml

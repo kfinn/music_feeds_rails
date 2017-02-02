@@ -1,7 +1,7 @@
 'use strict'
 
 class SpotifyPlaylistPlayer extends React.Component {
-  render () {
+  render() {
     return (
       <div className="SpotifyPlaylistPlayer">
         <iframe className="SpotifyPlaylistPlayer-iframe" src={this.getFrameSrc()} width="300" height="80" frameBorder="0" allowTransparency="true" />

@@ -1,5 +1,5 @@
 class SpotifySongPlayer extends React.Component {
-  render () {
+  render() {
     if (this.props.song.spotifyId) {
       return (
         <div className="SpotifySongPlayer">

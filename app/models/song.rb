@@ -3,6 +3,12 @@ require 'rspotify'
 class Song < ApplicationRecord
   TITLE_REGEX = /^[“"]([^”"]+)[”"](.*)$/
 
+  has_many :recommendations
+
+  validates :artist, :title, null: false
+
+  scope :ordered, -> { joins(:recommendations).group('songs.id').order('max(recommendations.recommended_at) desc') }
+
   def spotify_id
     spotify_track.try(:id)
   end
@@ -33,7 +39,8 @@ class Song < ApplicationRecord
       artist: artist,
       title: title,
       spotify_id: spotify_id,
-      key: key
+      key: key,
+      recommendations: recommendations.as_json
     }
   end
 end

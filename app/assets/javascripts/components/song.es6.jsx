@@ -1,7 +1,7 @@
 "use strict"
 
 class Song extends React.Component {
-  render () {
+  render() {
     return (
       <div className="Song">
         <div className="Song-playButton">
@@ -9,6 +9,7 @@ class Song extends React.Component {
         </div>
         <div className="Song-details">
           <span className="Song-artist">{ this.props.song.artist }</span> &mdash; <span className="Song-title">{ this.props.song.title }</span>
+          <RecommendationList recommendations={ this.props.song.recommendations }/>
         </div>
       </div>
     );

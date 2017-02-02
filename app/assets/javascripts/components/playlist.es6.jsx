@@ -1,7 +1,7 @@
 'use strict'
 
 class Playlist extends React.Component {
-  render () {
+  render() {
     return (
       <div className="Playlist">
         <h1 className="Playlist-title">Songs</h1>

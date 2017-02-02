@@ -10,7 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170201070701) do
+ActiveRecord::Schema.define(version: 20170202200646) do
+
+  create_table "recommendations", force: :cascade do |t|
+    t.string   "guid",           null: false
+    t.string   "url",            null: false
+    t.string   "creator",        null: false
+    t.string   "description"
+    t.integer  "song_id"
+    t.datetime "recommended_at", null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.index ["song_id"], name: "index_recommendations_on_song_id"
+  end
 
   create_table "songs", force: :cascade do |t|
     t.string   "title",      null: false
