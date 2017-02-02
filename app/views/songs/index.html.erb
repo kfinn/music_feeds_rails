@@ -1,31 +1,5 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Songs</h1>
+<%= react_component 'Playlist', songs: @songs.as_json %>
 
-<table>
-  <thead>
-    <tr>
-      <th>Artist</th>
-      <th>Title</th>
-      <th>Spotify ID</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @songs.each do |song| %>
-      <tr>
-        <td><%= song.artist %></td>
-        <td><%= song.title %></td>
-        <td><%= song.spotify_track.try(:id) %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br />
-
-<%= link_to('update', feed_updates_path, method: :post) %>
-
-<br />
-
-<%= spotify_player_for @songs %>
+<div><%= link_to 'update', feed_updates_path, method: :post %></div>
