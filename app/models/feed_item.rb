@@ -36,11 +36,15 @@ class FeedItem
   end
 
   def interesting?
-    song? && !metal?
+    song? && !metal? && !thrash?
   end
 
   def metal?
     xml.css('description').text.include? 'metal'
+  end
+
+  def thrash?
+    xml.css('description').text.include? 'thrash'
   end
 
   def song?

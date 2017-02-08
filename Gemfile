@@ -39,6 +39,9 @@ gem 'nokogiri'
 gem 'suitcss-rails'
 gem 'rspotify'
 gem 'kaminari'
+gem 'devise'
+gem 'omniauth'
+gem 'omniauth-spotify'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
