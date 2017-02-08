@@ -1,26 +1,26 @@
 class FeedItem
-  def initialize(xml)
-    @xml = xml
+  def initialize(rss)
+    @rss = rss
   end
 
   def guid
-    xml.css('guid').text
+    rss.guid.content
   end
 
   def url
-    xml.css('link').text
+    rss.link
   end
 
   def creator
-    xml.xpath('dc:creator').text
+    rss.dc_creator
   end
 
   def description
-    xml.css('description').text
+    rss.description
   end
 
   def recommended_at
-    xml.css('pubDate').text
+    rss.pubDate
   end
 
   def song_artist
@@ -28,33 +28,21 @@ class FeedItem
   end
 
   def categories
-    xml.css('category').map &:text
+    rss.categories.map &:content
   end
 
   def song_title
     raw_title.sub(/^[^#{TITLE_SEPARATOR}]*#{TITLE_SEPARATOR}/, '').sub(/ Video$/, '').strip
   end
 
-  def interesting?
-    song? && !metal? && !thrash?
-  end
-
-  def metal?
-    xml.css('description').text.include? 'metal'
-  end
-
-  def thrash?
-    xml.css('description').text.include? 'thrash'
-  end
-
   def song?
     raw_title.include? TITLE_SEPARATOR
   end
 
-  attr_reader :xml
+  attr_reader :rss
 
   def raw_title
-    xml.css('title').text
+    rss.title
   end
 
   TITLE_SEPARATOR = '–'
