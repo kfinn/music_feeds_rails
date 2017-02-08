@@ -1,4 +1,4 @@
-class FeedItem
+class StereogumRecommendation
   def initialize(rss)
     @rss = rss
   end

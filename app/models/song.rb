@@ -8,6 +8,7 @@ class Song < ApplicationRecord
   validates :artist, :title, null: false
 
   scope :ordered, -> { joins(:recommendations).group('songs.id').order('max(recommendations.recommended_at) desc') }
+  scope :interesting, -> { joins(:recommendations).merge(Recommendation.interesting) }
 
   def spotify_id
     spotify_track.try(:id)
