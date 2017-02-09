@@ -1,19 +1,21 @@
 <div class="Song">
   <div class="Song-playButton">
     <% if song.spotify_id %>
-      <div class="SpotifySongPlayer">
-        <iframe class="SpotifySongPlayer-iframe" src="<%= spotify_song_src_for song %>" width="80" height="80" frameBorder="0" allowTransparency="true"></iframe>
-      </div>
+    <div class="SpotifySongPlayer">
+      <iframe class="SpotifySongPlayer-iframe" src="<%= spotify_song_src_for song %>" width="80" height="80" frameBorder="0" allowTransparency="true"></iframe>
+    </div>
     <% end %>
   </div>
   <div class="Song-details">
     <span class="Song-artist"><%= song.artist %></span> &mdash; <%= link_to "\"#{song.title}\"", song_path(song.id), class: "Song-title" %>
+    <% if local_assigns[:include_recommendations] %>
     <ul class="RecommendationList">
       <% song.recommendations.each do |recommendation| %>
-       <li>
-        <%= render recommendation %>
-       </li>
-       <% end %>
+      <li>
+        <%= render recommendation, include_description: local_assigns[:full] %>
+      </li>
+      <% end %>
     </ul>
+    <% end %>
   </div>
 </div>

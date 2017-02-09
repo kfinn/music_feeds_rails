@@ -1,6 +1,17 @@
 <span class="Recommendation">
-  <%= link_to recommendation.creator, recommendation.url %>
+  <%= link_to recommendation.creator, recommendation_path(recommendation.id) %>
   <span class="Recommendation-recommendedAt">
     <%= time_ago_in_words recommendation.recommended_at %> ago
   </span>
+  <% if local_assigns[:include_description] %>
+  <div class="Recommendation-description">
+    <%= strip_tags recommendation.description %>
+  </div>
+  <%= link_to 'More...', recommendation.url, class: "Recommendation-moreLink" %>
+  <% end %>
+  <% if local_assigns[:include_song] %>
+  <div class="Recommendation-song">
+    <%= render recommendation.song %>
+  </div>
+  <% end %>
 </span>

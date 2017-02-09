@@ -1,0 +1,8 @@
+<div id="Recommendations">
+  <h1 class="Recommendations-title">Recommendations</div>
+  <ul class="Recmomendations-list">
+    <% @recommendations.each do |recommendation| %>
+      <%= render recommendation, include_song: true %>
+    <% end %>
+  </ul>
+</div>

@@ -4,6 +4,7 @@ class Recommendation < ApplicationRecord
   validates :guid, :url, :creator, null: false
 
   scope :interesting, -> { where.not('description like ?', '%metal%').where.not('description like ?', '%thrash%') }
+  scope :ordered, -> { order recommended_at: :desc }
 
   def as_json(*)
     {
