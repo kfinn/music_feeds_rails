@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   root to: 'homes#show', format: 'html'
 
   resource :home, only: :show
-  resources :songs, only: :index
+  resources :songs, only: [:show, :index]
   resources :feed_updates, only: :create
   resource :me, only: :show
 end

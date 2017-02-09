@@ -1,0 +1,6 @@
+<span class="Recommendation">
+  <%= link_to recommendation.creator, recommendation.url %>
+  <span class="Recommendation-recommendedAt">
+    <%= time_ago_in_words recommendation.recommended_at %> ago
+  </span>
+</span>

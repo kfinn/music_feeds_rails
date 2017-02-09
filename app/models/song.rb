@@ -1,8 +1,6 @@
 require 'rspotify'
 
 class Song < ApplicationRecord
-  TITLE_REGEX = /^[“"]([^”"]+)[”"](.*)$/
-
   has_many :recommendations
 
   validates :artist, :title, null: false
@@ -19,11 +17,7 @@ class Song < ApplicationRecord
   end
 
   def search_query
-    "artist:\"#{artist}\" track:\"#{title_text}\""
-  end
-
-  def title_text
-    TITLE_REGEX.match(title)[1]
+    "artist:\"#{artist}\" track:\"#{title}\""
   end
 
   def as_json(*)
