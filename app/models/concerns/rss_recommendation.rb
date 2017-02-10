@@ -31,4 +31,18 @@ module RssRecommendation
   def recommended_at
     rss.pubDate
   end
+
+  def song_query
+    { title: song_title, artist: song_artist }
+  end
+
+  def to_recommendation_attributes
+    {
+      url: url,
+      creator: creator,
+      description: description,
+      recommended_at: recommended_at,
+      feed_id: feed_id
+    }
+  end
 end
