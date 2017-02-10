@@ -22,5 +22,5 @@ class StereogumRecommendation
   end
 
   TITLE_SEPARATOR = '–'
-  TITLE_REGEX = /“([^”]+)”/
+  TITLE_REGEX = /["“\u2033]([^"”\u2033]+)[”"\u2033]/
 end
