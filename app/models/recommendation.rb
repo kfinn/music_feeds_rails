@@ -6,6 +6,8 @@ class Recommendation < ApplicationRecord
   scope :interesting, -> { where.not('description like ?', '%metal%').where.not('description like ?', '%thrash%') }
   scope :ordered, -> { order recommended_at: :desc }
 
+  enum feed_id: [:stereogum, :pitchfork_best_new_track]
+
   def as_json(*)
     {
       id: id,
@@ -15,5 +17,9 @@ class Recommendation < ApplicationRecord
       description: description,
       recommended_at: recommended_at
     }
+  end
+
+  def feed
+    @feed ||= Feed.find feed_id
   end
 end

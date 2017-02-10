@@ -7,7 +7,8 @@ class FeedUpdate
             url: feed_item.url,
             creator: feed_item.creator,
             description: feed_item.description,
-            recommended_at: feed_item.recommended_at
+            recommended_at: feed_item.recommended_at,
+            feed_id: feed_item.feed_id
           })
         end
       end

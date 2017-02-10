@@ -1,0 +1,6 @@
+- id: stereogum
+  name: Stereogum
+  url: http://www.stereogum.com/music
+- id: pitchfork_best_new_track
+  name: Pitchfork Best New Tracks
+  url: http://pitchfork.com/reviews/best/tracks/

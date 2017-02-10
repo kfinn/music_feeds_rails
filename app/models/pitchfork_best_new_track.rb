@@ -3,6 +3,7 @@ require 'open-uri'
 
 class PitchforkBestNewTrack
   include RssRecommendation
+  feed_id :pitchfork_best_new_track
 
   attr_reader :rss
 

@@ -1,5 +1,6 @@
 class StereogumRecommendation
   include RssRecommendation
+  feed_id :stereogum
 
   def initialize(rss)
     @rss = rss

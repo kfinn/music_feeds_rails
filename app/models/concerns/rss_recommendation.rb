@@ -1,8 +1,15 @@
 module RssRecommendation
   extend ActiveSupport::Concern
 
+  module ClassMethods
+    def feed_id(feed_id = nil)
+      @feed_id ||= feed_id
+    end
+  end
+
   included do
-      attr_reader :rss
+    attr_reader :rss
+    delegate :feed_id, to: :class
   end
 
   def guid
