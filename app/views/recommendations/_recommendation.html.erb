@@ -1,7 +1,7 @@
 <span class="Recommendation">
   <%= link_to recommendation.creator, recommendation_path(recommendation.id), class: "Recommendation-authorLink" %>
   <span class="Recommendation-feedName">
-    (<%= link_to recommendation.feed.name, recommendation.feed.url, class: 'Recommendation-feedNameLink' %>)
+    (<%= link_to recommendation.feed.name, feed_path(recommendation.feed.id), class: 'Recommendation-feedNameLink' %>)
   </span>
   <span class="Recommendation-recommendedAt">
     <%= time_ago_in_words recommendation.recommended_at %> ago

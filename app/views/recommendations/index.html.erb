@@ -2,7 +2,9 @@
   <h1 class="Recommendations-title">Recommendations</div>
   <ul class="Recmomendations-list">
     <% @recommendations.each do |recommendation| %>
+    <li class="Recommendations-listItem">
       <%= render recommendation, include_song: true %>
+    </li>
     <% end %>
   </ul>
   <%= paginate @recommendations %>

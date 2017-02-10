@@ -1,0 +1,11 @@
+<div id="Feeds">
+  <h1 class="Feeds-title">Feeds</div>
+  <ul class="Feeds-list">
+    <% @feeds.each do |feed| %>
+    <li class="Feeds-listItem">
+      <%= link_to feed.name, feed_path(feed.id), class: 'Feeds-listItemLink' %>
+    </li>
+    <% end %>
+  </ul>
+  <div><%= link_to 'update all', all_feed_updates_path, method: :post %></div>
+</div>

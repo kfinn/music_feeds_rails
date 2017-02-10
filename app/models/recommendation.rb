@@ -8,6 +8,10 @@ class Recommendation < ApplicationRecord
 
   enum feed_id: [:stereogum, :pitchfork_best_new_track]
 
+  def self.for_feed(feed)
+    where feed_id: feed.id
+  end
+
   def as_json(*)
     {
       id: id,

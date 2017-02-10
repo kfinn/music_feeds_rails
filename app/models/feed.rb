@@ -14,13 +14,16 @@ class Feed
     @all ||= YAML.load_file(Rails.root.join('config/feeds.yml')).map { |feed_attributes| new feed_attributes }
   end
 
-  def update
+  def update!
     remote_feed.recommendations.each do |feed_item|
       Song.find_or_create_by!(feed_item.song_query).tap do |song|
         song.recommendations.find_or_initialize_by(guid: feed_item.guid).update!(feed_item.to_recommendation_attributes)
       end
     end
-    true
+  end
+
+  def recommendations
+    @recommendations ||= Recommendation.for_feed self
   end
 
   private

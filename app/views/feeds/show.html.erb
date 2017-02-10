@@ -1,0 +1,13 @@
+<div id="Feed">
+  <h1 class="Feed-title">Feed</h1>
+  <%= link_to @feed.name, @feed.url, class: 'Feed-name' %>
+  <%= link_to 'update', feed_updates_path(@feed.id), method: :post, class: 'Feed-updateLink' %>
+  <ul class="Feed-recommendationsList">
+    <% @recommendations.each do |recommendation| %>
+    <li class="Feed-recommendationsListItem">
+      <%= render recommendation, include_song: true %>
+    </li>
+    <% end %>
+  </ul>
+  <%= paginate @recommendations %>
+</div>

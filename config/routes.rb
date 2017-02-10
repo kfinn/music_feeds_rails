@@ -5,6 +5,9 @@ Rails.application.routes.draw do
   resource :home, only: :show
   resources :songs, only: [:show, :index]
   resources :recommendations, only: [:show, :index]
-  resources :feed_updates, only: :create
+  resources :feeds, only: [:index, :show] do
+    resources :updates, only: [:create]
+  end
+  resources :all_feed_updates, only: :create
   resource :me, only: :show
 end
