@@ -1,6 +1,6 @@
 class MesController < ApplicationController
-  before_action :authenticate_user!
   def show
     @me = current_user
+    @playlists = current_user.playlists.page params[:page]
   end
 end

@@ -10,4 +10,8 @@ Rails.application.routes.draw do
   end
   resources :all_feed_updates, only: :create
   resource :me, only: :show
+  resources :user, only: [] do
+    resources :playlists, only: [:new, :create]
+  end
+  resources :playlists, only: [:index, :show]
 end

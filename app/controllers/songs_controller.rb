@@ -1,4 +1,4 @@
-class SongsController < ApplicationController
+class SongsController < UnauthenticatedController
   def index
     @songs = Song.interesting.ordered.page params[:page]
   end

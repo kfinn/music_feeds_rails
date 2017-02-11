@@ -1,4 +1,4 @@
-class FeedsController < ApplicationController
+class FeedsController < UnauthenticatedController
   def index
     @feeds = Feed.all
   end

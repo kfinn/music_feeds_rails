@@ -1,4 +1,4 @@
-class RecommendationsController < ApplicationController
+class RecommendationsController < UnauthenticatedController
   def index
     @recommendations = Recommendation.interesting.ordered.page params[:page]
   end

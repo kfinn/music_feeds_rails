@@ -1,0 +1,11 @@
+<div id="Playlists">
+  <h1 class="Playlists-title">Playlists</h1>
+  <ul class="Playlists-list">
+    <% @playlists.each do |playlist| %>
+    <li class="Playlists-listItem">
+      <%= link_to playlist.name, playlist_path(playlist.id), class: 'Playlists-listItemLink' %>
+    </li>
+    <% end %>
+  </ul>
+  <%= paginate @playlists %>
+</div>

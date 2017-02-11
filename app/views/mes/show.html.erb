@@ -1,1 +1,13 @@
-<p>Me!
+<div class="CurrentUser">
+  <h1 class="CurrentUser-title">Current User</h1>
+  <div class="CurrentUser-email"><%= @current_user.email %></div>
+  <%= link_to 'create playlist', new_user_playlist_path(@current_user.id), class: 'CurrentUser-createPlaylistLink' %>
+  <ul class="CurrentUser-playlistList">
+    <% @playlists.each do |playlist| %>
+    <li class="CurrentUser-playlistListItem">
+      <%= link_to playlist.name, playlist_path(playlist.id), class: "CurrentUser-playlistListItemLink" %>
+    </li>
+    <% end %>
+  </ul>
+  <%= paginate @playlists %>
+</div>
