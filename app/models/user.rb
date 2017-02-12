@@ -20,6 +20,12 @@ class User < ApplicationRecord
     )
   end
 
+  def rspotify_user
+    @rspotify_user ||= RSpotify::User.new to_rspotify_params
+  end
+
+  private
+
   def to_rspotify_params
     {
       info: {

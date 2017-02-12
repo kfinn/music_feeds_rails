@@ -5,13 +5,20 @@ class Playlist < ApplicationRecord
 
   validates :name, null: false
 
-  before_save :sync_to_spotify!
+  before_create :create_spotify_playlist!
+
+  delegate :rspotify_user, to: :user
 
   def sync_to_spotify!
-    return if spotify_id
-    self.spotify_id = RSpotify::User.new(user.to_rspotify_params).create_playlist!(name).id
+    spotify_playlist.replace_tracks! Song.interesting.ordered.map(&:spotify_track).compact
   end
 
   def spotify_playlist
+    @spotify_playlist ||= RSpotify::Playlist.find(rspotify_user.id, spotify_id)
+  end
+
+  def create_spotify_playlist!
+    self.spotify_id = rspotify_user.create_playlist!(name).id
+    sync_to_spotify!
   end
 end

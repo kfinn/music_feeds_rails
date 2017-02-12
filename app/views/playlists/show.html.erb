@@ -1,4 +1,8 @@
 <div class="Playlist">
   <h1 class="Playlist-title">Playlist</h1>
-  <div class="Playlist-name"><%= @playlist.name %>
+  <div class="Playlist-name"><%= @playlist.name %></div>
+  <%= link_to 'sync', playlist_spotify_sync_path(@playlist.id), method: :post %>
+  <div class="SpotifyPlaylistPlayer">
+    <iframe class="SpotifyPlaylistPlayer-iframe" src="<%= spotify_playlist_src_for @playlist %>" width="300" height="80" frameBorder="0" allowTransparency="true"></iframe>
+  </div>
 </div>

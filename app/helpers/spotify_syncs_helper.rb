@@ -1,0 +1,2 @@
+module SpotifySyncsHelper
+end
