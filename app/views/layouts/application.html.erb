@@ -9,6 +9,14 @@
   </head>
 
   <body>
+    <nav class="Navigation">
+      <%= link_to 'MusicFeed', '/', class: 'Navigation-item' %>
+      <%= link_to 'Songs', songs_path, class: 'Navigation-item' %>
+      <%= link_to 'Recommendations', recommendations_path, class: 'Navigation-item' %>
+      <%= link_to 'Feeds', feeds_path, class: 'Navigation-item' %>
+      <%= link_to 'Playlists', playlists_path, class: 'Navigation-item' %>
+      <%= link_to 'Me', me_path, class: 'Navigation-item' %>
+    </nav>
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
     <%= yield %>
