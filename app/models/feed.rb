@@ -1,8 +1,14 @@
 require 'yaml'
 
 class Feed
-  include ActiveModel::Model
-  attr_accessor :id, :name, :url, :strategy
+  attr_reader :id, :name, :url, :strategy
+
+  def initialize(id:, name:, url:, strategy:)
+    @id = id
+    @name = name
+    @url = url
+    @strategy = strategy
+  end
 
   def self.find(id)
     by_id[id].tap do |feed|
@@ -11,7 +17,9 @@ class Feed
   end
 
   def self.all
-    @all ||= YAML.load_file(Rails.root.join('config/feeds.yml')).map { |feed_attributes| new feed_attributes }
+    @all ||= YAML.load_file(Rails.root.join('config/feeds.yml')).map do |feed_attributes|
+      new feed_attributes.symbolize_keys
+    end
   end
 
   def update!

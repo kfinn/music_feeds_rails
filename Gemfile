@@ -44,6 +44,7 @@ gem 'omniauth'
 gem 'omniauth-spotify'
 gem 'simple_form'
 gem 'delayed_job_active_record'
+gem 'clockwork'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
