@@ -82,6 +82,4 @@ test:
 #
 production:
   <<: *default
-  database: music_feeds_rails_production
-  username: music_feeds_rails
-  password: <%= ENV['MUSIC_FEEDS_RAILS_DATABASE_PASSWORD'] %>
+  url: <%=ENV['DATABASE_URL'] %>
