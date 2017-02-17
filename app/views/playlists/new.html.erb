@@ -1,5 +1,5 @@
 <div id="PlaylistForm">
-  <%= simple_form_for [@playlist.user, @playlist] do |f| %>
+  <%= simple_form_for @playlist do |f| %>
     <%= f.input :name %>
     <%= f.button :submit %>
   <% end %>

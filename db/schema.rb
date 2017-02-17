@@ -10,7 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170210234340) do
+ActiveRecord::Schema.define(version: 20170214221653) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "delayed_jobs", force: :cascade do |t|
+    t.integer  "priority",   default: 0, null: false
+    t.integer  "attempts",   default: 0, null: false
+    t.text     "handler",                null: false
+    t.text     "last_error"
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.string   "locked_by"
+    t.string   "queue"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.index ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
+  end
 
   create_table "playlists", force: :cascade do |t|
     t.string   "name",       null: false
@@ -18,7 +36,7 @@ ActiveRecord::Schema.define(version: 20170210234340) do
     t.string   "spotify_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_playlists_on_user_id"
+    t.index ["user_id"], name: "index_playlists_on_user_id", using: :btree
   end
 
   create_table "recommendations", force: :cascade do |t|
@@ -31,7 +49,7 @@ ActiveRecord::Schema.define(version: 20170210234340) do
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
     t.integer  "feed_id",        default: 0, null: false
-    t.index ["song_id"], name: "index_recommendations_on_song_id"
+    t.index ["song_id"], name: "index_recommendations_on_song_id", using: :btree
   end
 
   create_table "songs", force: :cascade do |t|
@@ -56,8 +74,8 @@ ActiveRecord::Schema.define(version: 20170210234340) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at",                                   null: false
     t.datetime "updated_at",                                   null: false
-    t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["spotify_uid"], name: "index_users_on_spotify_uid", unique: true
+    t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
+    t.index ["spotify_uid"], name: "index_users_on_spotify_uid", unique: true, using: :btree
   end
 
 end
