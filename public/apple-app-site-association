@@ -4,7 +4,7 @@
         "details": [
             {
                 "appID": "JGJC2NGW6L.com.heptarex.MusicFeedsIOS",
-                "paths": [ "/me"]
+                "paths": [ "/users/auth/spotify/ios_callback" ]
             }
         ]
     }
