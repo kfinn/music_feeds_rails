@@ -8,16 +8,18 @@ class Song < ApplicationRecord
   scope :ordered, -> { joins(:recommendations).group('songs.id').order('max(recommendations.recommended_at) desc') }
   scope :interesting, -> { joins(:recommendations).merge(Recommendation.interesting) }
 
-  before_save :hydrate_spotify_id!
+  def spotify_id
+    super || hydrate_spotify_id!
+  end
 
   def spotify_track
-    hydrate_spotify_id!
     spotify_id_track || spotify_search_track
   end
 
   def hydrate_spotify_id!
-    return if spotify_id.present?
-    self.spotify_id = spotify_search_track.id if spotify_search_track.present?
+    spotify_search_track.try(:id).tap do |spotify_id|
+      update!(spotify_id: spotify_id) if spotify_id.present?
+    end
   end
 
   def spotify_id_track
