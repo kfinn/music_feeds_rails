@@ -27,6 +27,8 @@ class Song < ApplicationRecord
       @spotify_id_track = spotify_id.present? ? RSpotify::Track.find(spotify_id) : nil
     end
     @spotify_id_track
+  rescue
+    nil
   end
 
   def spotify_search_track
@@ -34,6 +36,8 @@ class Song < ApplicationRecord
       @spotify_search_track = RSpotify::Track.search(search_query).first
     end
     @spotify_search_track
+  rescue
+    nil
   end
 
   def search_query
