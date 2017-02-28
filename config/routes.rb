@@ -14,4 +14,5 @@ Rails.application.routes.draw do
   resources :playlists, only: [:index, :show, :new, :create] do
     resource :spotify_sync, only: :create
   end
+  resources :spotify_syncs, only: :show
 end

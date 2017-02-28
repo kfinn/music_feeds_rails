@@ -4,6 +4,7 @@ class User < ApplicationRecord
   devise :registerable, :rememberable, :trackable, :omniauthable, omniauth_providers: [:spotify]
 
   has_many :playlists
+  has_many :spotify_syncs, through: :playlists
 
   def self.from_omniauth(omniauth)
     find_by(spotify_uid: omniauth[:uid]) || create_from_omniauth!(omniauth)

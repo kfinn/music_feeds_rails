@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170228013925) do
+ActiveRecord::Schema.define(version: 20170228234319) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -68,6 +68,14 @@ ActiveRecord::Schema.define(version: 20170228013925) do
     t.string   "spotify_id"
   end
 
+  create_table "spotify_syncs", force: :cascade do |t|
+    t.integer  "playlist_id"
+    t.datetime "completed_at"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.index ["playlist_id"], name: "index_spotify_syncs_on_playlist_id", using: :btree
+  end
+
   create_table "users", force: :cascade do |t|
     t.string   "spotify_uid",                                  null: false
     t.string   "email",                                        null: false
@@ -87,4 +95,5 @@ ActiveRecord::Schema.define(version: 20170228013925) do
     t.index ["spotify_uid"], name: "index_users_on_spotify_uid", unique: true, using: :btree
   end
 
+  add_foreign_key "spotify_syncs", "playlists"
 end

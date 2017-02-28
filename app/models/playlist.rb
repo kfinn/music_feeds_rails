@@ -2,6 +2,7 @@ require 'rspotify'
 
 class Playlist < ApplicationRecord
   belongs_to :user
+  has_many :spotify_syncs
 
   validates :name, null: false
 
