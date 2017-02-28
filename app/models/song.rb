@@ -17,6 +17,8 @@ class Song < ApplicationRecord
   end
 
   def hydrate_spotify_id!
+    return if @hydration_attempted
+    @hydration_attempted = true
     spotify_search_track.try(:id).tap do |spotify_id|
       update!(spotify_id: spotify_id) if spotify_id.present?
     end
