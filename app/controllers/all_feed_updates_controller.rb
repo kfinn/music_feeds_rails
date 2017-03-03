@@ -1,6 +1,6 @@
 class AllFeedUpdatesController < UnauthenticatedController
   def create
-    Feed.all.each &:update_from_remote!
+    Feed.all.each { |feed| feed.feed_updates.create! }
     redirect_to songs_path
   end
 end

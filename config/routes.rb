@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   resources :feeds, only: [:index, :show] do
     resources :updates, only: [:create]
   end
+  resources :updates, only: [:show]
   resources :all_feed_updates, only: :create
   resource :me, only: :show
   resources :playlists, only: [:index, :show, :new, :create] do

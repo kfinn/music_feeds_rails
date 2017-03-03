@@ -1,6 +1,10 @@
 class UpdatesController < UnauthenticatedController
   def create
-    Feed.find(params[:feed_id]).update_from_remote!
-    redirect_to(update_path(params[:feed_id]))
+    Feed.find(params[:feed_id]).feed_updates.create!
+    redirect_to update_path(Feed.find(params[:feed_id]).feed_updates.create!)
+  end
+
+  def show
+    @feed_update = FeedUpdate.find(params[:id])
   end
 end
