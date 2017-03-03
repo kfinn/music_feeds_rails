@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170228234319) do
+ActiveRecord::Schema.define(version: 20170303221836) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,6 +36,15 @@ ActiveRecord::Schema.define(version: 20170228234319) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_device_tokens_on_user_id", using: :btree
+  end
+
+  create_table "feed_updates", force: :cascade do |t|
+    t.string   "feed_id"
+    t.datetime "completed_at"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.index ["completed_at"], name: "index_feed_updates_on_completed_at", using: :btree
+    t.index ["feed_id"], name: "index_feed_updates_on_feed_id", using: :btree
   end
 
   create_table "playlists", force: :cascade do |t|
@@ -73,6 +82,7 @@ ActiveRecord::Schema.define(version: 20170228234319) do
     t.datetime "completed_at"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
+    t.index ["created_at"], name: "index_spotify_syncs_on_created_at", using: :btree
     t.index ["playlist_id"], name: "index_spotify_syncs_on_playlist_id", using: :btree
   end
 

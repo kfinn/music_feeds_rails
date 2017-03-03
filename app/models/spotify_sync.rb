@@ -3,6 +3,9 @@ class SpotifySync < ApplicationRecord
 
   after_create :eventually_sync!
 
+  scope :recently_completed, -> { completed.order(completed_at: :desc) }
+  scope :completed, -> { where.not(completed_at: nil) }
+
   def completed?
     completed_at.present?
   end
@@ -12,7 +15,9 @@ class SpotifySync < ApplicationRecord
   end
 
   def sync!
-    playlist.sync_to_spotify!
-    update! completed_at: Time.zone.now
+    transaction do
+      playlist.sync_to_spotify!
+      update! completed_at: Time.zone.now
+    end
   end
 end
