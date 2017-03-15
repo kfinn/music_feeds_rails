@@ -11,7 +11,7 @@ class Playlist < ApplicationRecord
   delegate :rspotify_user, to: :user
 
   def sync_to_spotify!
-    spotify_playlist.replace_tracks! Song.interesting.ordered.map(&:spotify_track).compact unless fresh?
+    spotify_playlist.replace_tracks! Song.interesting.ordered.first(50).map(&:spotify_track).compact unless fresh?
   end
 
   def spotify_playlist
