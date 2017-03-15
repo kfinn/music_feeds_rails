@@ -15,7 +15,7 @@ class StereogumRecommendation
   end
 
   def song?
-    raw_title.include? TITLE_SEPARATOR
+    raw_title.include? TITLE_SEPARATOR && TITLE_REGEX.match(raw_title)
   end
 
   def raw_title
