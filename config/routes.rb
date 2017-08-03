@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   devise_for :users, controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
   get '/users/auth/spotify/ios_callback' => redirect('/')
-  root to: 'homes#show', format: 'html'
+  root to: 'songs#index', format: 'html'
 
   resource :home, only: :show
   resources :songs, only: [:show, :index]
