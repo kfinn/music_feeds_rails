@@ -7,6 +7,6 @@ class PitchforkBestNewTracksFeed
   end
 
   def rss
-    @rss ||= RSS::Parser.parse open 'http://pitchfork.com/rss/reviews/best/tracks/'
+    @rss ||= RSS::Parser.parse open 'https://pitchfork.com/rss/reviews/best/tracks/'
   end
 end
