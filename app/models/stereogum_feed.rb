@@ -7,7 +7,7 @@ class StereogumFeed
   end
 
   def rss
-    @rss ||= RSS::Parser.parse(open('http://www.stereogum.com/music/feed/'))
+    @rss ||= RSS::Parser.parse(open('https://www.stereogum.com/music/feed/'))
   end
 
   private
