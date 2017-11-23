@@ -7,8 +7,21 @@ class Song < ApplicationRecord
 
   validates :artist, :title, null: false
 
-  scope :ordered, -> { joins(:recommendations).group('songs.id').order('max(recommendations.recommended_at) desc') }
-  scope :interesting, -> { joins(:recommendations).merge(Recommendation.interesting) }
+  scope :interesting, -> { where id: Recommendation.interesting.select(:song_id) }
+
+  def self.ordered
+    joins(<<~SQL.squish)
+      JOIN (
+        SELECT
+          "recommendations"."song_id" AS song_id,
+          MAX("recommendations"."recommended_at") AS most_recently_recommended_at
+        FROM "recommendations"
+        GROUP BY "recommendations"."song_id"
+      ) AS "most_recent_song_recommendations"
+      ON "most_recent_song_recommendations"."song_id" = "songs"."id"
+    SQL
+      .order '"most_recent_song_recommendations"."most_recently_recommended_at" desc'
+  end
 
   def spotify_id
     super || hydrate_spotify_id!

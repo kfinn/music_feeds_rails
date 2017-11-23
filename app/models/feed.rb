@@ -12,15 +12,25 @@ class Feed
     @strategy = strategy
   end
 
-  def self.find(id)
-    by_id[id].tap do |feed|
-      raise "Couldn't find Feed with 'id'=#{id}" unless feed.present?
+  class << self
+    def find(id)
+      by_id[id].tap do |feed|
+        raise "Couldn't find Feed with 'id'=#{id}" unless feed.present?
+      end
     end
-  end
 
-  def self.all
-    @all ||= YAML.load_file(Rails.root.join('config/feeds.yml')).map do |feed_attributes|
-      new feed_attributes.symbolize_keys
+    def all
+      @all ||= YAML.load_file(Rails.root.join('config/feeds.yml')).map do |feed_attributes|
+        new feed_attributes.symbolize_keys
+      end
+    end
+
+    delegate :each, to: :all
+
+    private
+
+    def by_id
+      @by_id ||= all.each_with_object({}) { |feed, by_id| by_id[feed.id] = feed }.with_indifferent_access
     end
   end
 
@@ -40,12 +50,18 @@ class Feed
     @recommendations ||= Recommendation.for_feed self
   end
 
-  private
-
-  def self.by_id
-    @by_id ||= all.each_with_object({}) { |feed, by_id| by_id[feed.id] = feed }.with_indifferent_access
+  def ensure_fresh!
+    feed_updates.create! unless last_updated_at.present? && last_updated_at > 6.hours.ago
   end
-  private_class_method :by_id
+
+  def last_updated_at
+    unless instance_variable_defined? :@last_updated_at
+      @last_updated_at = feed_updates.maximum(:created_at)
+    end
+    @last_updated_at
+  end
+
+  private
 
   def remote_feed
     @remote_feed ||= strategy.constantize.new
