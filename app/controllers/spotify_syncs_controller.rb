@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class SpotifySyncsController < ApplicationController
   def create
     playlist = current_user.playlists.find params[:playlist_id]

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class MesController < ApplicationController
   def show
     @me = current_user

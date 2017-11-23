@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'yaml'
 
 class Feed
@@ -43,8 +45,9 @@ class Feed
   def self.by_id
     @by_id ||= all.each_with_object({}) { |feed, by_id| by_id[feed.id] = feed }.with_indifferent_access
   end
+  private_class_method :by_id
 
   def remote_feed
-    @remote_feed ||= self.strategy.constantize.new
+    @remote_feed ||= strategy.constantize.new
   end
 end

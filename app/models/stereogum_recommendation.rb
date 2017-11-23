@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class StereogumRecommendation
   include RssRecommendation
   feed_id :stereogum

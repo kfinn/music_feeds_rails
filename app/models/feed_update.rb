@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class FeedUpdate < ApplicationRecord
   after_create :eventually_update_feed!
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module SongsHelper
   def spotify_playlist_src_for(playlist)
     spotify_src_for_uri "spotify:user:#{playlist.user.spotify_uid}:playlist:#{playlist.spotify_id}"

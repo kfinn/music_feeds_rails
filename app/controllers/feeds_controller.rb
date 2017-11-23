@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class FeedsController < UnauthenticatedController
   def index
     @feeds = Feed.all

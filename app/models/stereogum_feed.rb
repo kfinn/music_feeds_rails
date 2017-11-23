@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 require 'rss'
 require 'open-uri'
 
 class StereogumFeed
   def recommendations
-    feed_items.select &:song?
+    feed_items.select(&:song?)
   end
 
   def rss
