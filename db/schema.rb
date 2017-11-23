@@ -30,14 +30,6 @@ ActiveRecord::Schema.define(version: 20170303221836) do
     t.index ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
   end
 
-  create_table "device_tokens", force: :cascade do |t|
-    t.string   "token",      null: false
-    t.integer  "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_device_tokens_on_user_id", using: :btree
-  end
-
   create_table "feed_updates", force: :cascade do |t|
     t.string   "feed_id"
     t.datetime "completed_at"
@@ -105,5 +97,7 @@ ActiveRecord::Schema.define(version: 20170303221836) do
     t.index ["spotify_uid"], name: "index_users_on_spotify_uid", unique: true, using: :btree
   end
 
+  add_foreign_key "playlists", "users"
+  add_foreign_key "recommendations", "songs"
   add_foreign_key "spotify_syncs", "playlists"
 end
