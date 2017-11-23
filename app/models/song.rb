@@ -41,7 +41,10 @@ class Song < ApplicationRecord
   end
 
   def search_query
-    "artist:\"#{artist}\" track:\"#{title}\""
+    {
+      artist: artist,
+      track: title
+    }.compact.map { |k, v| "#{k}:\"#{v}\"" }.join ' '
   end
 
   def as_json(*)

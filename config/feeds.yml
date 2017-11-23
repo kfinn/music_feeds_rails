@@ -6,3 +6,11 @@
   name: Pitchfork Best New Tracks
   url: http://pitchfork.com/reviews/best/tracks/
   strategy: PitchforkBestNewTracksFeed
+- id: popgun_presents
+  name: Popgun Presents
+  url: http://www.twitter.com/popgunpresents
+  strategy: PopgunPresentsFeed
+- id: elsewhere
+  name: Elsewhere
+  url: http://www.twitter.com/elsewherespace
+  strategy: ElsewhereFeed
