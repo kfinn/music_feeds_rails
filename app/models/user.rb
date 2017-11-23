@@ -8,19 +8,24 @@ class User < ApplicationRecord
   has_many :playlists
   has_many :spotify_syncs, through: :playlists
 
-  def self.from_omniauth(omniauth)
-    find_by(spotify_uid: omniauth[:uid]) || create_from_omniauth!(omniauth)
-  end
+  class << self
+    def from_omniauth(omniauth)
+      find_or_initialize_by(spotify_uid: omniauth[:uid]).tap do |user|
+        user.update!(user_params_from_omniauth(omniauth))
+      end
+    end
 
-  def self.create_from_omniauth!(omniauth)
-    create!(
-      spotify_uid: omniauth[:uid],
-      email: omniauth[:info][:email],
-      spotify_credential_token: omniauth[:credentials][:token],
-      spotify_credential_refresh_token: omniauth[:credentials][:refresh_token],
-      spotify_credential_expires_at: Time.zone.at(omniauth[:credentials][:expires_at]).to_datetime,
-      spotify_credential_expires: omniauth[:credentials][:expires]
-    )
+    private
+
+    def user_params_from_omniauth(omniauth)
+      {
+        email: omniauth[:info][:email],
+        spotify_credential_token: omniauth[:credentials][:token],
+        spotify_credential_refresh_token: omniauth[:credentials][:refresh_token],
+        spotify_credential_expires_at: Time.zone.at(omniauth[:credentials][:expires_at]).to_datetime,
+        spotify_credential_expires: omniauth[:credentials][:expires]
+      }.compact
+    end
   end
 
   def rspotify_user
