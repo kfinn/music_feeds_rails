@@ -1,0 +1,7 @@
+<div id="SpotifyIdCorrectionForm">
+  <%= render @spotify_id_correction.song, include_recommendations: true  %>
+  <%= simple_form_for @spotify_id_correction, url: song_spotify_id_corrections_path(@spotify_id_correction.song) do |f| %>
+    <%= f.input :spotify_id, collection: @spotify_id_correction.alternative_song_results, as: :spotify_song_radio_buttons %>
+    <%= f.button :submit %>
+  <% end %>
+</div>

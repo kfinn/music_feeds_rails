@@ -48,9 +48,21 @@ class Song < ApplicationRecord
 
   def spotify_search_track
     unless instance_variable_defined?(:@spotify_search_track)
-      @spotify_search_track = RSpotify::Track.search(search_query).first
+      @spotify_search_track = spotify_search_results.first
     end
     @spotify_search_track
+  end
+
+  def spotify_search_results
+    RSpotify::Track.search search_query
+  end
+
+  def self.from_spotify_track(spotify_track)
+    new(
+      artist: spotify_track.artists.first.name,
+      title: spotify_track.name,
+      spotify_id: spotify_track.id
+    )
   end
 
   def search_query

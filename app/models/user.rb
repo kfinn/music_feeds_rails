@@ -7,6 +7,11 @@ class User < ApplicationRecord
 
   has_many :playlists
   has_many :spotify_syncs, through: :playlists
+  has_many :spotify_id_corrections
+
+  def spotify_id_correction_for_song(song)
+    spotify_id_corrections.find_or_initialize_by(song: song)
+  end
 
   class << self
     def from_omniauth(omniauth)

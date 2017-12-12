@@ -5,8 +5,9 @@ Rails.application.routes.draw do
   get '/users/auth/spotify/ios_callback' => redirect('/')
   root to: 'songs#index', format: 'html'
 
-  resource :home, only: :show
-  resources :songs, only: %i[show index]
+  resources :songs, only: %i[show index] do
+    resource :spotify_id_corrections, only: %i[edit update]
+  end
   resources :recommendations, only: %i[show index]
   resources :feeds, only: %i[index show] do
     resources :updates, only: [:create]

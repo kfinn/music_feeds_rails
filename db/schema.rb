@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170303221836) do
+ActiveRecord::Schema.define(version: 20171212051446) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -69,6 +69,16 @@ ActiveRecord::Schema.define(version: 20170303221836) do
     t.string   "spotify_id"
   end
 
+  create_table "spotify_id_corrections", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "song_id"
+    t.string   "spotify_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["song_id"], name: "index_spotify_id_corrections_on_song_id", using: :btree
+    t.index ["user_id"], name: "index_spotify_id_corrections_on_user_id", using: :btree
+  end
+
   create_table "spotify_syncs", force: :cascade do |t|
     t.integer  "playlist_id"
     t.datetime "completed_at"
@@ -99,5 +109,7 @@ ActiveRecord::Schema.define(version: 20170303221836) do
 
   add_foreign_key "playlists", "users"
   add_foreign_key "recommendations", "songs"
+  add_foreign_key "spotify_id_corrections", "songs"
+  add_foreign_key "spotify_id_corrections", "users"
   add_foreign_key "spotify_syncs", "playlists"
 end
