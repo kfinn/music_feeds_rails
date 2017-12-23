@@ -16,6 +16,13 @@ class PopgunFeedRecommendation
     }
   end
 
+  def top_music_feeds_song
+    unless instance_variable_defined?(:@top_music_feeds_song)
+      @top_music_feeds_song = Song.where(artist: artist).ordered.first
+    end
+    @top_music_feeds_song
+  end
+
   def top_spotify_track
     unless instance_variable_defined?(:@top_spotify_track)
       @top_spotify_track = RSpotify::Track.search(search_query).first
