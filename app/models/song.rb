@@ -4,10 +4,15 @@ require 'rspotify'
 
 class Song < ApplicationRecord
   has_many :recommendations
+  has_many :song_opinions
 
   validates :artist, :title, null: false
 
   scope :interesting, -> { where id: Recommendation.interesting.select(:song_id) }
+
+  def self.interesting_to_user(user)
+    interesting.where.not id: user.song_opinions.boring.select(:song_id)
+  end
 
   before_save :reset_spotify_id!, if: :spotify_id_conflicts?
 

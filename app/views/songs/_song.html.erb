@@ -9,7 +9,7 @@
   <div class="Song-details">
     <% if song.id %>
       <span class="Song-artist"><%= song.artist %></span> &mdash; <%= link_to "\"#{song.title}\"", song_path(song), class: "Song-title" %>
-      (<%= link_to 'edit', edit_song_path(song) %>)
+      (<%= link_to 'edit', edit_song_path(song) %> | <%= link_to 'hide', song_song_opinion_path(song, song_opinion: { interesting: false }), method: :post %>)
     <% else %>
       <span class="Song-artist"><%= song.artist %></span>&mdash; "<%= song.title %>"
     <% end %>

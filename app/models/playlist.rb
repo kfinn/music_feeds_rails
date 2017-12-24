@@ -13,7 +13,15 @@ class Playlist < ApplicationRecord
   delegate :rspotify_user, to: :user
 
   def sync_to_spotify!
-    spotify_playlist.replace_tracks! Song.interesting.ordered.first(50).map(&:spotify_track).compact unless fresh?
+    return if fresh?
+    spotify_playlist.replace_tracks!(
+      Song
+      .interesting_to_user(user)
+      .ordered
+      .first(50)
+      .map(&:spotify_track)
+      .compact
+    )
   end
 
   def spotify_playlist
@@ -26,6 +34,15 @@ class Playlist < ApplicationRecord
   end
 
   def fresh?
+    fresher_than_syncs? && fresher_than_opinions?
+  end
+
+  def fresher_than_syncs?
     spotify_syncs.recently_completed.first.completed_at > FeedUpdate.recently_completed.first.completed_at
+  end
+
+  def fresher_than_opinions?
+    spotify_syncs.recently_completed.first.completed_at >
+      user.song_opinions.max(:updated_at)
   end
 end

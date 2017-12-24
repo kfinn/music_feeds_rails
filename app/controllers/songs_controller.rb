@@ -4,7 +4,7 @@ class SongsController < UnauthenticatedController
   def index
     @songs =
       Song
-      .interesting
+      .interesting_to_user(current_user)
       .ordered
       .page(params[:page])
       .includes(:recommendations)

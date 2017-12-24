@@ -7,6 +7,7 @@ class User < ApplicationRecord
 
   has_many :playlists
   has_many :spotify_syncs, through: :playlists
+  has_many :song_opinions
 
   class << self
     def from_omniauth(omniauth)
