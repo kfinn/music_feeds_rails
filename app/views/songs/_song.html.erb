@@ -7,7 +7,12 @@
     <% end %>
   </div>
   <div class="Song-details">
-    <span class="Song-artist"><%= song.artist %></span> &mdash; <%= link_to "\"#{song.title}\"", song_path(song), class: "Song-title" %>(<%= link_to 'edit', edit_song_path(song) %>)
+    <% if song.id %>
+      <span class="Song-artist"><%= song.artist %></span> &mdash; <%= link_to "\"#{song.title}\"", song_path(song), class: "Song-title" %>
+      (<%= link_to 'edit', edit_song_path(song) %>)
+    <% else %>
+      <span class="Song-artist"><%= song.artist %></span>&mdash; "<%= song.title %>"
+    <% end %>
     <% if local_assigns[:include_recommendations] %>
     <ul class="RecommendationList">
       <% song.recommendations.each do |recommendation| %>
@@ -16,6 +21,9 @@
       </li>
       <% end %>
     </ul>
+    <% end %>
+    <% if song.id %>
+      (<%= link_to 'edit spotify track', new_song_spotify_id_correction_path(song) %>)
     <% end %>
   </div>
 </div>

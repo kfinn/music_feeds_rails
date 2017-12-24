@@ -4,3 +4,7 @@
   <%= f.input :title %>
   <%= f.button :submit %>
 <% end %>
+
+<% @song.recommendations.each do |recommendation| %>
+  <%= render recommendation, include_description: true %>
+<% end %>

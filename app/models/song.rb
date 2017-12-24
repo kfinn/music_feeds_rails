@@ -9,6 +9,8 @@ class Song < ApplicationRecord
 
   scope :interesting, -> { where id: Recommendation.interesting.select(:song_id) }
 
+  before_save :reset_spotify_id!, if: :spotify_id_conflicts?
+
   def self.ordered
     joins(<<~SQL.squish)
       JOIN (
@@ -48,9 +50,21 @@ class Song < ApplicationRecord
 
   def spotify_search_track
     unless instance_variable_defined?(:@spotify_search_track)
-      @spotify_search_track = RSpotify::Track.search(search_query).first
+      @spotify_search_track = spotify_search_results.first
     end
     @spotify_search_track
+  end
+
+  def spotify_search_results
+    @spotify_search_results ||= RSpotify::Track.search(search_query)
+  end
+
+  def self.from_spotify_track(spotify_track)
+    new(
+      artist: spotify_track.artists.first.name,
+      title: spotify_track.name,
+      spotify_id: spotify_track.id
+    )
   end
 
   def search_query
@@ -60,14 +74,15 @@ class Song < ApplicationRecord
     }.compact.map { |k, v| "#{k}:\"#{v}\"" }.join ' '
   end
 
-  def as_json(*)
-    {
-      id: id,
-      artist: artist,
-      title: title,
-      spotify_id: spotify_id,
-      key: key,
-      recommendations: recommendations.as_json
-    }
+  def build_spotify_id_correction(attributes)
+    SpotifyIdCorrection.new(attributes.merge(song: self))
+  end
+
+  def reset_spotify_id!
+    update! spotify_id: nil
+  end
+
+  def spotify_id_conflicts?
+    spotify_search_results.map(&:id).exclude? spotify_id
   end
 end

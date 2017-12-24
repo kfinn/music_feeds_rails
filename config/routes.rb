@@ -6,12 +6,14 @@ Rails.application.routes.draw do
   root to: 'songs#index', format: 'html'
 
   resource :home, only: :show
-  resources :songs, only: %i[show index edit update]
+  resources :songs, only: %i[show index edit update] do
+    resources :spotify_id_corrections, only: %i[new create]
+  end
   resources :recommendations, only: %i[show index]
   resources :feeds, only: %i[index show] do
-    resources :updates, only: [:create]
+    resources :updates, only: :create
   end
-  resources :updates, only: [:show]
+  resources :updates, only: :show
   resource :me, only: :show
   resources :playlists, only: %i[index show new create] do
     resource :spotify_sync, only: :create

@@ -16,6 +16,7 @@ class SongsController < UnauthenticatedController
 
   def edit
     @song = Song.find(params[:id])
+    @song.assign_attributes update_params
   end
 
   def update
@@ -25,5 +26,9 @@ class SongsController < UnauthenticatedController
     else
       render :edit, status: :unprocessable_entity
     end
+  end
+
+  def update_params
+    params.permit(song: %i[artist title])[:song] || {}
   end
 end
