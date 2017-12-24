@@ -17,23 +17,27 @@ class Song < ApplicationRecord
   before_save :reset_spotify_id!, if: :spotify_id_conflicts?
 
   def self.ordered
-    joins(<<~SQL.squish)
-      JOIN (
-        SELECT
-          "recommendations"."song_id" AS song_id,
-          MAX("recommendations"."recommended_at") AS most_recently_recommended_at
-        FROM "recommendations"
-        GROUP BY "recommendations"."song_id"
-      ) AS "most_recent_song_recommendations"
-      ON "most_recent_song_recommendations"."song_id" = "songs"."id"
+    order(<<~SQL.squish)
+      COALESCE("spotify_id_updated_at", '2017-01-01') DESC
     SQL
-      .order '"most_recent_song_recommendations"."most_recently_recommended_at" desc'
+      .order <<~SQL.squish
+        (
+          SELECT MAX("recommendations"."recommended_at")
+          FROM "recommendations"
+          WHERE "recommendations"."song_id" = "songs"."id"
+        ) DESC
+      SQL
   end
 
   def spotify_id(hydrate: true)
     return super() if super().present? || !hydrate
     hydrate_spotify_id!
     super()
+  end
+
+  def spotify_id=(spotify_id)
+    super
+    self.spotify_id_updated_at = spotify_id.present? ? Time.zone.now : nil
   end
 
   def spotify_track
