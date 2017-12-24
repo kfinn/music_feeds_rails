@@ -8,4 +8,12 @@ class ApplicationController < ActionController::Base
   def ensure_feeds_fresh!
     Feed.each(&:ensure_fresh!)
   end
+
+  def self.admin_only!
+    before_action :ensure_admin_user!
+  end
+
+  def ensure_admin_user!
+    raise AbstractController::ActionNotFound unless current_user.admin?
+  end
 end

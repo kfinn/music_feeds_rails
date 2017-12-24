@@ -32,6 +32,10 @@ class User < ApplicationRecord
     @rspotify_user ||= RSpotify::User.new to_rspotify_params
   end
 
+  def admin?
+    email == 'superkevin@gmail.com'
+  end
+
   private
 
   def to_rspotify_params

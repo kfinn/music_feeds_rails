@@ -15,11 +15,13 @@ class SongsController < UnauthenticatedController
   end
 
   def edit
+    ensure_admin_user!
     @song = Song.find(params[:id])
     @song.assign_attributes update_params
   end
 
   def update
+    ensure_admin_user!
     @song = Song.find(params[:id])
     if @song.update update_params
       redirect_to(song_path(@song))

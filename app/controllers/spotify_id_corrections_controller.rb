@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class SpotifyIdCorrectionsController < ApplicationController
+  admin_only!
+
   def new
     song = Song.find(params[:song_id])
     @spotify_id_correction = song.build_spotify_id_correction create_params
