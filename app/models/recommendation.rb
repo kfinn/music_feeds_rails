@@ -14,17 +14,6 @@ class Recommendation < ApplicationRecord
     where feed_id: feed.id
   end
 
-  def as_json(*)
-    {
-      id: id,
-      guid: guid,
-      url: url,
-      creator: creator,
-      description: description,
-      recommended_at: recommended_at
-    }
-  end
-
   def feed
     @feed ||= Feed.find feed_id
   end

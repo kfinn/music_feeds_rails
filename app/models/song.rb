@@ -25,8 +25,10 @@ class Song < ApplicationRecord
       .order '"most_recent_song_recommendations"."most_recently_recommended_at" desc'
   end
 
-  def spotify_id
-    super || hydrate_spotify_id!
+  def spotify_id(hydrate: true)
+    return super() if super().present? || !hydrate
+    hydrate_spotify_id!
+    super()
   end
 
   def spotify_track
@@ -83,6 +85,7 @@ class Song < ApplicationRecord
   end
 
   def spotify_id_conflicts?
+    return false unless spotify_id(hydrate: false).present?
     spotify_search_results.map(&:id).exclude? spotify_id
   end
 end

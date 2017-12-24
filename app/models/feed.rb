@@ -35,10 +35,16 @@ class Feed
   end
 
   def update_from_remote!
-    remote_feed.recommendations.each do |feed_item|
+    new_recommendations.each do |feed_item|
       Song.find_or_create_by!(feed_item.song_query).tap do |song|
         song.recommendations.find_or_initialize_by(guid: feed_item.guid).update!(feed_item.to_recommendation_attributes)
       end
+    end
+  end
+
+  def new_recommendations
+    @new_recommendations ||= remote_feed.recommendations.reject do |feed_item|
+      recommendations.find_by(guid: feed_item.guid)
     end
   end
 
