@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   root to: 'songs#index', format: 'html'
 
   resource :home, only: :show
-  resources :songs, only: %i[show index]
+  resources :songs, only: %i[show index edit update]
   resources :recommendations, only: %i[show index]
   resources :feeds, only: %i[index show] do
     resources :updates, only: [:create]

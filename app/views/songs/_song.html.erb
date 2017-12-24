@@ -7,7 +7,7 @@
     <% end %>
   </div>
   <div class="Song-details">
-    <span class="Song-artist"><%= song.artist %></span> &mdash; <%= link_to "\"#{song.title}\"", song_path(song.id), class: "Song-title" %>
+    <span class="Song-artist"><%= song.artist %></span> &mdash; <%= link_to "\"#{song.title}\"", song_path(song), class: "Song-title" %>(<%= link_to 'edit', edit_song_path(song) %>)
     <% if local_assigns[:include_recommendations] %>
     <ul class="RecommendationList">
       <% song.recommendations.each do |recommendation| %>
