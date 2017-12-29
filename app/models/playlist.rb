@@ -43,6 +43,6 @@ class Playlist < ApplicationRecord
 
   def fresher_than_opinions?
     spotify_syncs.recently_completed.first.completed_at >
-      user.song_opinions.max(:updated_at)
+      user.song_opinions.maximum(:updated_at)
   end
 end
