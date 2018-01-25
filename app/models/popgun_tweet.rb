@@ -9,7 +9,7 @@ class PopgunTweet
 
   def artists_mentioned(artist_delimiter)
     tweet.full_text.scan(/#{artist_delimiter}(.*)\n/).map(&:first).map do |unsanitized_artist|
-      unsanitized_artist.split(%r{\s[Ww]/\s}).first
+      unsanitized_artist.split(%r{\s[Ww]/\s}).first.delete(artist_delimiter).titleize
     end.map(&:strip)
   end
 end

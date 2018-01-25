@@ -14,7 +14,7 @@ class PopgunTwitterFeed
           artist: artist,
           feed_id: recommendation_feed_id
         )
-      end.select(&:top_spotify_track)
+      end.select(&:known_song?)
     end.flatten
   end
 

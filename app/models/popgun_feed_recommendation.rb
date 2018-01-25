@@ -11,14 +11,26 @@ class PopgunFeedRecommendation
   def song_query
     {
       artist: artist,
-      title: top_spotify_track.name,
+      title: song.name,
       spotify_id: top_spotify_track.id
     }
   end
 
+  def known_song?
+    top_music_feeds_song.present? || top_spotify_track.present?
+  end
+
+  def song_query_title
+    if top_music_feeds_song
+      top_music_feeds_song.title
+    else
+      top_spotify_track&.name
+    end
+  end
+
   def top_music_feeds_song
     unless instance_variable_defined?(:@top_music_feeds_song)
-      @top_music_feeds_song = Song.where(artist: artist).ordered.first
+      @top_music_feeds_song = Song.where('lower(artist) = lower(:artist)', artist: artist).ordered.first
     end
     @top_music_feeds_song
   end
