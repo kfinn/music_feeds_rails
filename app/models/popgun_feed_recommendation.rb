@@ -11,7 +11,7 @@ class PopgunFeedRecommendation
   def song_query
     {
       artist: artist,
-      title: song.name,
+      title: song_query_title,
       spotify_id: top_spotify_track.id
     }
   end
