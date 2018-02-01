@@ -18,7 +18,7 @@ class Song < ApplicationRecord
 
   def self.ordered
     order(<<~SQL.squish)
-      COALESCE("spotify_id_updated_at", '2017-01-01') DESC
+      COALESCE("spotify_id_updated_at" :: DATE, '2017-01-01') DESC
     SQL
       .order <<~SQL.squish
         (
