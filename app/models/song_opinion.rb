@@ -9,6 +9,6 @@ class SongOpinion < ApplicationRecord
   scope :boring, -> { where interesting: false }
 
   def eventually_sync_to_spotify
-    user.playlists.each(&:create_spotify_sync!)
+    user.playlists.each { |p| p.spotify_syncs.create! }
   end
 end
